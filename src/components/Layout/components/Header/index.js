@@ -2,13 +2,20 @@ import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './Header.module.scss';
-import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleXmark,
+  faMagnifyingGlass,
+  faSpinner,
+  faSignIn,
+  faEllipsisVertical,
+} from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
 
 import { Wrapper as PopperWrapper } from '~/components/Layout/Popper';
 import images from '~/assets/images';
 import 'tippy.js/dist/tippy.css'; // optional
 import AccountItem from '~/components/Layout/AccountItem';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 console.log(images.logo);
@@ -17,7 +24,7 @@ function Header() {
 
   useEffect(() => {
     setTimeout(() => {
-      setSearchResult([1, 2, 3]);
+      setSearchResult([]);
     }, 0);
   }, []);
   return (
@@ -51,7 +58,28 @@ function Header() {
             </button>
           </div>
         </Tippy>
-        <div className={cx('actions')}></div>
+        <div className={cx('actions')}>
+          <Button text>Upload</Button>
+          <Button primary>Login</Button>
+          <Tippy
+            interactive
+            placement="bottom-end"
+            render={(attrs) => (
+              <div className={cx('menu-items')} tabIndex="-1" {...attrs}>
+                <PopperWrapper>
+                  <h4 className={cx('search-title')}>Accounts</h4>
+                  <AccountItem />
+                  <AccountItem />
+                  <AccountItem />
+                </PopperWrapper>
+              </div>
+            )}
+          >
+            <button className={cx('more-btn')}>
+              <FontAwesomeIcon icon={faEllipsisVertical} />
+            </button>
+          </Tippy>
+        </div>
       </div>
     </header>
   );
