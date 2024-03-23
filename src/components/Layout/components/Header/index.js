@@ -8,16 +8,35 @@ import {
   faSpinner,
   faSignIn,
   faEllipsisVertical,
+  faEarthAsia,
+  faCircleQuestion,
+  faKeyboard,
 } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
 
-import { Wrapper as PopperWrapper } from '~/components/Layout/Popper';
+import { Wrapper as PopperWrapper } from '~/components/Popper';
 import images from '~/assets/images';
 import 'tippy.js/dist/tippy.css'; // optional
 import AccountItem from '~/components/Layout/AccountItem';
 import Button from '~/components/Button';
+import Menu from '~/components/Popper/Menu';
 
 const cx = classNames.bind(styles);
+const MENU_ITEMS = [
+  {
+    icon: <FontAwesomeIcon icon={faEarthAsia} />,
+    title: 'English',
+  },
+  {
+    icon: <FontAwesomeIcon icon={faCircleQuestion} />,
+    title: 'Feedback and help',
+    to: '/feedback',
+  },
+  {
+    icon: <FontAwesomeIcon icon={faKeyboard} />,
+    title: 'Keyboard shortcuts',
+  },
+];
 console.log(images.logo);
 function Header() {
   const [searchResult, setSearchResult] = useState([]);
@@ -61,24 +80,11 @@ function Header() {
         <div className={cx('actions')}>
           <Button text>Upload</Button>
           <Button primary>Login</Button>
-          <Tippy
-            interactive
-            placement="bottom-end"
-            render={(attrs) => (
-              <div className={cx('menu-items')} tabIndex="-1" {...attrs}>
-                <PopperWrapper>
-                  <h4 className={cx('search-title')}>Accounts</h4>
-                  <AccountItem />
-                  <AccountItem />
-                  <AccountItem />
-                </PopperWrapper>
-              </div>
-            )}
-          >
+          <Menu items={MENU_ITEMS}>
             <button className={cx('more-btn')}>
               <FontAwesomeIcon icon={faEllipsisVertical} />
             </button>
-          </Tippy>
+          </Menu>
         </div>
       </div>
     </header>
